@@ -306,6 +306,7 @@
     "clean": "rm -rf out/*",
     "generate:config": "tsx ./scripts/generate-config.mts",
     "generate:jupyterclient": "tsx ./src/jupyter/client/generate.mts",
+    "cli": "tsx ./src/cli/colab-cli.ts",
     "build": "concurrently \"npm:build:extension\" \"npm:build:tests\" \"npm:typecheck\" --prefixColors=auto",
     "build:extension": "tsx esbuild.config.mts",
     "build:tests": "npm run build:extension -- --tests",
@@ -355,7 +356,7 @@
     "clipboardy": "^4.0.0",
     "concurrently": "^9.1.2",
     "cspell": "^8.17.3",
-    "dotenv": "^16.5.0",
+    "dotenv": "^16.6.1",
     "esbuild": "^0.25.2",
     "esbuild-node-externals": "^1.18.0",
     "eslint": "^9.33.0",
@@ -369,7 +370,6 @@
     "selenium-webdriver": "^4.41.0",
     "sinon": "^21.0.1",
     "source-map-support": "^0.5.21",
-    "tsx": "^4.19.4",
     "typescript": "^5.7.2",
     "typescript-eslint": "^8.15.0",
     "vscode-extension-tester": "^8.14.1",
@@ -380,10 +380,15 @@
     "glob": "^11.1.0",
     "google-auth-library": "^9.15.0",
     "node-fetch": "^2.6.7",
+    "open": "^11.0.0",
     "semver": "^7.7.3",
+    "tsx": "^4.19.4",
     "uuid": "^11.0.3",
     "vscode-languageclient": "^10.0.0-next.17",
     "ws": "^6.2.3",
     "zod": "^4.0.17"
+  },
+  "bin": {
+    "colab-cli": "bin/colab-cli.mjs"
   }
 }
