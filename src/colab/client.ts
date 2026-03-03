@@ -46,7 +46,7 @@ import {
   COLAB_XSRF_TOKEN_HEADER,
 } from './headers';
 
-const XSSI_PREFIX = ")]}'\n";
+const XSSI_PREFIX = ")]}'";
 const TUN_ENDPOINT = '/tun/m';
 
 // To discriminate the type of GET assignment responses.
@@ -541,7 +541,14 @@ function stripXssiPrefix(v: string): string {
   if (!v.startsWith(XSSI_PREFIX)) {
     return v;
   }
-  return v.slice(XSSI_PREFIX.length);
+  const stripped = v.slice(XSSI_PREFIX.length);
+  if (stripped.startsWith('\r\n')) {
+    return stripped.slice(2);
+  }
+  if (stripped.startsWith('\n')) {
+    return stripped.slice(1);
+  }
+  return stripped;
 }
 
 class ColabRequestError extends Error {

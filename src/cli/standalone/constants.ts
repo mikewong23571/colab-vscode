@@ -32,6 +32,6 @@ export const CREDENTIALS_FILE = path.join(
   'credentials.json',
 );
 
-export const XSSI_PREFIX = ")]}'\n";
+export const XSSI_PREFIX = ")]}'";
 export const TUN_ENDPOINT = '/tun/m';
 export const REQUEST_TIMEOUT_MS = 30_000;

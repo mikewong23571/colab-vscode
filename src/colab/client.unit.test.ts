@@ -825,6 +825,36 @@ describe('ColabClient', () => {
     sinon.assert.calledOnce(fetchStub);
   });
 
+  it('supports XSSI responses without trailing newline', async () => {
+    fetchStub
+      .withArgs(
+        urlMatcher({
+          method: 'GET',
+          host: GOOGLE_APIS_HOST,
+          path: '/v1/user-info',
+          withAuthUser: false,
+        }),
+      )
+      .resolves(
+        new Response(
+          `)]}'${JSON.stringify({
+            subscriptionTier: 'SUBSCRIPTION_TIER_NONE',
+            eligibleAccelerators: [],
+            ineligibleAccelerators: [],
+          })}`,
+          { status: 200 },
+        ),
+      );
+
+    await expect(client.getUserInfo()).to.eventually.deep.equal({
+      subscriptionTier: SubscriptionTier.NONE,
+      eligibleAccelerators: [],
+      ineligibleAccelerators: [],
+    });
+
+    sinon.assert.calledOnce(fetchStub);
+  });
+
   it('retries request on 401 if onAuthError is provided', async () => {
     fetchStub
       .withArgs(

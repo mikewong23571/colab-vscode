@@ -38,5 +38,12 @@ export function stripXssiPrefix(v: string): string {
   if (!v.startsWith(XSSI_PREFIX)) {
     return v;
   }
-  return v.slice(XSSI_PREFIX.length);
+  const stripped = v.slice(XSSI_PREFIX.length);
+  if (stripped.startsWith('\r\n')) {
+    return stripped.slice(2);
+  }
+  if (stripped.startsWith('\n')) {
+    return stripped.slice(1);
+  }
+  return stripped;
 }
