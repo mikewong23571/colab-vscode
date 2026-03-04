@@ -8,18 +8,45 @@ import * as os from 'os';
 import * as path from 'path';
 import { config as loadDotEnv } from 'dotenv';
 
-import { CONFIG } from '../../colab-config';
-
 loadDotEnv();
 
+type ColabEnvironment = 'production' | 'sandbox' | 'local';
+
+function getDefaultDomains(environment: string): {
+  colabDomain: string;
+  colabGapiDomain: string;
+} {
+  switch (environment as ColabEnvironment) {
+    case 'sandbox':
+      return {
+        colabDomain: 'https://colab.sandbox.google.com',
+        colabGapiDomain: 'https://staging-colab.sandbox.googleapis.com',
+      };
+    case 'local':
+      return {
+        colabDomain: 'https://localhost:8888',
+        // Colab GAPI does not have a fully local endpoint.
+        colabGapiDomain: 'https://staging-colab.sandbox.googleapis.com',
+      };
+    case 'production':
+    default:
+      return {
+        colabDomain: 'https://colab.research.google.com',
+        colabGapiDomain: 'https://colab.pa.googleapis.com',
+      };
+  }
+}
+
+const environment = process.env.COLAB_EXTENSION_ENVIRONMENT ?? 'production';
+const defaultDomains = getDefaultDomains(environment);
+
 export const COLAB_DOMAIN =
-  process.env.COLAB_EXTENSION_API_DOMAIN ?? CONFIG.ColabApiDomain;
+  process.env.COLAB_EXTENSION_API_DOMAIN ?? defaultDomains.colabDomain;
 export const COLAB_GAPI_DOMAIN =
-  process.env.COLAB_EXTENSION_GAPI_DOMAIN ?? CONFIG.ColabGapiDomain;
-export const OAUTH_CLIENT_ID =
-  process.env.COLAB_EXTENSION_CLIENT_ID ?? CONFIG.ClientId;
+  process.env.COLAB_EXTENSION_GAPI_DOMAIN ?? defaultDomains.colabGapiDomain;
+export const OAUTH_CLIENT_ID = process.env.COLAB_EXTENSION_CLIENT_ID;
 export const OAUTH_CLIENT_SECRET =
-  process.env.COLAB_EXTENSION_CLIENT_NOT_SO_SECRET ?? CONFIG.ClientNotSoSecret;
+  process.env.COLAB_EXTENSION_CLIENT_NOT_SO_SECRET;
 export const OAUTH_SCOPES = [
   'email',
   'profile',

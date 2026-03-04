@@ -143,9 +143,13 @@ function startLocalServer(expectedState: string): {
           return;
         }
 
-        res.writeHead(200, { 'Content-Type': 'text/html' });
+        res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
         res.end(`
           <html>
+            <head>
+              <meta charset="utf-8" />
+              <title>Colab CLI OAuth</title>
+            </head>
             <body style="font-family: sans-serif; text-align: center; padding: 50px;">
               <h1>✓ Authentication Successful!</h1>
               <p>You can close this window and return to the CLI.</p>
