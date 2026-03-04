@@ -9,6 +9,27 @@ description: Run Google Colab CLI commands from a GitHub fork/branch/tag/commit 
 
 Execute Colab CLI commands directly from a remote Git ref with `npx`.
 Prefer `npx + git` over local runtime to keep execution reproducible and tied to an explicit commit/branch.
+For a repo-agnostic collaboration pattern, read `references/local-colab-git-workflow.md`.
+For config-driven bootstrap runs, read `references/colab-run-yaml-spec.md`.
+
+## Config-Driven Bootstrap
+
+Use `scripts/colab_bootstrap.py` when the user asks for a single reusable entrypoint
+that reads `colab-run.yaml` and runs clone/fetch/checkout/install/run in sequence.
+
+```bash
+# Validate and preview commands
+python skills/colab-cli/scripts/colab_bootstrap.py --config colab-run.yaml --dry-run --print-config
+
+# Execute
+python skills/colab-cli/scripts/colab_bootstrap.py --config colab-run.yaml
+```
+
+If `PyYAML` is missing, install it first:
+
+```bash
+pip install pyyaml
+```
 
 ## Execution Workflow
 

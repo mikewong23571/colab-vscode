@@ -1,0 +1,17 @@
+schema_version: 1
+
+repo:
+  url: https://github.com/<owner>/<repo>.git
+  ref: <commit-sha>
+  local_dir: /content/workspace/repo
+
+runtime:
+  workdir: .
+  env:
+    PYTHONUNBUFFERED: "1"
+
+steps:
+  install:
+    - pip install -r requirements.txt
+  run:
+    - python scripts/run.py --config configs/train.yaml
