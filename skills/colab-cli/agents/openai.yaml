@@ -1,0 +1,4 @@
+interface:
+  display_name: "Colab CLI"
+  short_description: "Run Colab CLI via npx plus Git refs and fork URLs"
+  default_prompt: "Use $colab-cli to run a Colab CLI command from a Git ref via npx."

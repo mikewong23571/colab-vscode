@@ -26,10 +26,13 @@ After you push CLI changes to your own GitHub fork, you can run the CLI directly
 without cloning:
 
 ```bash
-# SSH repo URL (your fork)
-npx --yes --package=git+ssh://git@github.com/mikewong23571/colab-vscode.git#main colab-cli -- help
+# HTTPS repo URL (default, works without SSH key setup)
+npx --yes --package=git+https://github.com/mikewong23571/colab-vscode.git#main colab-cli -- help
 
 # Example command
+npx --yes --package=git+https://github.com/mikewong23571/colab-vscode.git#main colab-cli -- me
+
+# Optional SSH URL (if SSH access is configured)
 npx --yes --package=git+ssh://git@github.com/mikewong23571/colab-vscode.git#main colab-cli -- me
 ```
 
